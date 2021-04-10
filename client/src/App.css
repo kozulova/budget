@@ -1,0 +1,28 @@
+.App {
+  text-align: center;
+}
+ul{
+  list-style: none;
+  padding: none;
+  width: 30%;
+  margin: auto;
+}
+.header{
+  text-align: center;
+}
+.userNameInput{
+  width: 400px;
+  margin:  20px auto;
+}
+.expencesForm{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.expencesForm input, .expencesForm select, .expencesForm button{
+  width: 100%;
+}
+.expense{
+  display: flex;
+  justify-content: space-between;
+}
