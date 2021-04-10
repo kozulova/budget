@@ -4,7 +4,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 const AddExpenseForm = () => {
-    const {addExpense} = useContext(GlobalContext);
+    const {addExpense, getExpenses} = useContext(GlobalContext);
 
     const [date, setDate] = useState(new Date());
     const [amount, setAmount] = useState(0);
@@ -17,9 +17,14 @@ const AddExpenseForm = () => {
         console.log({date, amount, category})
     }
 
+    const findExpensesByDate = (e) => {
+        setDate(e);
+        getExpenses(e);
+    }
+
     return (
         <div className="expencesForm">
-            <Calendar value={date} onChange={ e => setDate(e)}/>
+            <Calendar value={date} onClickDay={findExpensesByDate}/>
             <form onSubmit={createEntry}>
                 <input type="number" placeholder='Spent amount'
                  value={amount} onChange={(e) => setAmount(e.target.value)}/>

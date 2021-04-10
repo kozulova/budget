@@ -27,9 +27,10 @@ export const GlobalProvider = ({children}) => {
         });
     }
 
-    const getExpenses = async () =>{
+    const getExpenses = async (date = new Date()) =>{
         try{
-            const res = await axios.get('/expenses');
+            const res = await axios.get('/expenses', {params:{userName: state.userName, date: date}});
+            console.log(res);
             dispatch({
                 type: 'GET_EXPENSES',
                 payload: res.data.data
@@ -37,6 +38,18 @@ export const GlobalProvider = ({children}) => {
             
         }catch(err){
             console.log(err)
+        }
+    }
+    
+    const deleteExpence = async (id) =>{
+        try{
+            await axios.delete(`expenses/${id}`);
+            dispatch({
+                type: 'DELETE_EXPENSE',
+                payload: id
+            })
+        }catch(err){
+            console.log(err);
         }
     }
 
@@ -47,5 +60,5 @@ export const GlobalProvider = ({children}) => {
         })
     }
 
-    return (<GlobalContext.Provider value={{state,  addExpense, getExpenses, setUserName}}>{children}</GlobalContext.Provider>)
+    return (<GlobalContext.Provider value={{state,  addExpense, getExpenses, setUserName, deleteExpence}}>{children}</GlobalContext.Provider>)
 }

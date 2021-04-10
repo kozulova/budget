@@ -16,7 +16,12 @@ export default (state, action) => {
             return{
                 ...state,
                 userName: action.payload
-            }    
+            } 
+        case 'DELETE_EXPENSE':
+            return{
+                ...state,
+                expenses: state.expenses.filter(expense=>expense._id !== action.payload)
+            }       
         default:
             return state; 
     }
