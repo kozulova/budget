@@ -6,7 +6,6 @@ exports.getExpenses = async (req, res, next) => {
     try{
         const user = req.query.userName || 'elvis';
         const date = new Date(req.query.date);
-        console.log(date.toDateString())
         const expenses = await Expense.find({date: {$gte: startOfDay(date), $lt: endOfDay(date)}, userName: user});
         return res.status(200).json({success: true,
              data: expenses});
