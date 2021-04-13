@@ -1,8 +1,6 @@
 export default (state, action) => {
     switch(action.type){
         case 'ADD_EXPENSE':
-            console.log(state)
-            console.log(action.payload)
             return {
                 ...state,
                 expenses: [action.payload, ...state.expenses]
@@ -21,7 +19,24 @@ export default (state, action) => {
             return{
                 ...state,
                 expenses: state.expenses.filter(expense=>expense._id !== action.payload)
-            }       
+            }
+        case 'TOOGLE_EXPENSE':
+            return{
+                ...state,
+                editMode: !state.editMode,
+                editExpense: action.payload || null
+            }
+        case 'EDIT_EXPENSE':
+            const editedExpense = action.payload;
+            return{
+                ...state,
+                expenses: state.expenses.map(expense => editedExpense._id === expense._id ? editedExpense : expense)
+            } 
+        case 'LOGOUT':
+            return{
+                ...state,
+                userName: null
+            }             
         default:
             return state; 
     }

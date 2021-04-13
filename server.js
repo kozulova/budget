@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const router = require('./routes/expenses');
+const expenseRouter = require('./routes/expenses');
+const userRouter = require('./routes/users');
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -14,7 +15,8 @@ app.use(bodyParser.json());
 dotenv.config();
 connectDB();
 
-app.use('/expenses', router);
+app.use('/expenses', expenseRouter);
+app.use('/users', userRouter);
 
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static('client/build'));

@@ -14,8 +14,8 @@ const Expenses = () => {
         <div>
             <h2>Day spending</h2>
             <ul>
-                {state.expenses.map(expense=><Expense expense={expense}/>)}
-                <li key="total">Total - {state.expenses.reduce((sum, expense) => { return sum + Number(expense.amount) }, 0)}</li>
+                {state.expenses.map(expense=><Expense expense={expense} key={expense._id}/>)}
+                <li key="total">Total - $ {state.expenses.reduce((sum, expense) => { return sum + Number(expense.amount) }, 0)}</li>
             </ul>
             
         </div>

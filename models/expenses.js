@@ -13,10 +13,10 @@ const ExpenseSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    userName: {
-        type: String,
-        required: [true, 'Please add username']
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
-})
+});
 
 module.exports = mongoose.model('Expense', ExpenseSchema);

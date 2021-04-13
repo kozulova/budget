@@ -3,7 +3,7 @@ import {GlobalContext} from '../context/GlobalState'
 import App from '../App';
 
 const Header = () => {
-    const {state, setUserName} = useContext(GlobalContext);
+    const {state, setUserName, Logout} = useContext(GlobalContext);
     const userName = state.userName;
     const userNameInput = useRef('');
 
@@ -13,7 +13,7 @@ const Header = () => {
 
     return (
         userName ?
-        (<div><div className="header"> Hello, {userName}</div>
+        (<div><div className="header"> Hello, {userName} <button onClick={Logout}>Logout</button></div>
         <App/> 
         </div>
             ) :

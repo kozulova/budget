@@ -1,12 +1,16 @@
 const Expense = require('../models/expenses');
 const startOfDay = require('date-fns/startOfDay');
 const endOfDay = require('date-fns/endOfDay');
+const User = require('../models/users');
 
 exports.getExpenses = async (req, res, next) => {
     try{
-        const user = req.query.userName || 'elvis';
+        const userName = req.query.userName;
+        const user = await User.findOne({userName});
+        console.log(user)
         const date = new Date(req.query.date);
-        const expenses = await Expense.find({date: {$gte: startOfDay(date), $lt: endOfDay(date)}, userName: user});
+        const expenses = await Expense.find({date: {$gte: startOfDay(date), $lt: endOfDay(date)}, user: user});
+        console.log(expenses);
         return res.status(200).json({success: true,
              data: expenses});
     }catch(err){
@@ -14,10 +18,10 @@ exports.getExpenses = async (req, res, next) => {
     }
 }
 exports.addExpense =  async (req, res, next) => {
-    console.log(req.body);
     try{
         const {category, amount, date, userName} = req.body;
-        const expense = await Expense.create(req.body);
+        const user = await User.findOne({userName});
+        const expense = await Expense.create({category, amount, date, user: user});
         return res.status(201).json({
             success: true,
             data: expense
@@ -34,7 +38,6 @@ exports.deleteExpence = async (req, res, next) => {
     try{
         const id = req.params.id;
         const expense = await Expense.findById(id);
-        console.log(expense);
         if(!expense){
             return res.status(404).json({
                 success: false,
@@ -56,9 +59,9 @@ exports.deleteExpence = async (req, res, next) => {
     }
 }
 
-exports.updateExpence = async (req, res, next) => {
+exports.updateExpense = async (req, res, next) => {
     try{
-        const expense = await Expense.findByIdAndUpdate(req.params.id, req.body);
+        const expense = await Expense.findByIdAndUpdate(req.params.id, req.body, {new: true});
 
         if(!expense){
             return res.status(404).json({
@@ -75,5 +78,4 @@ exports.updateExpence = async (req, res, next) => {
             err
         })
     }
-    return res.send('Update expence');
 }
